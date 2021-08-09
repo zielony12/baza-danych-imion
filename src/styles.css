@@ -1,0 +1,40 @@
+* {
+  margin: 0px;
+  outline: 0px;
+}
+
+body {
+  background-color: white;
+}
+
+.button,
+.entry {
+  border: 1px solid black;
+  width: 170px;
+  height: 25px;
+}
+
+.button {
+
+}
+
+.button:hover {
+  background-color: lightgray;
+}
+
+.button:active {
+  background-color: gray;
+}
+
+#container {
+  margin: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#dodaj {
+  text-align: center;
+  width: 200px;
+  background-color: orange;
+}
