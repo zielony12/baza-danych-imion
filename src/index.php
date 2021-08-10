@@ -11,46 +11,25 @@
 		<div id="container">
 			<div id="dodaj">
 				<h4>
-					Dodaj imie
+					Menu
 				</h4>
-				<form name="f1" method="POST" action="add.php">
-					<input class="entry" name="e1" type="text" placeholder="Imie" />
-					<br /><br />
-					<input class="entry" name="e2" type="text" placeholder="Nazwisko" />
-					<br /><br />
-					<img border="2" src="verify.php" width="170" height="25" />
-					<br />
-					<input class="entry" name="e3" type="text" placeholder="Kod z obrazka" />
-					<br /><br />
-					<label>
-						<input name="accept" type="checkbox" />
-						Akceptuję <a href="regulamin.php">regulamin</a>
-					</label>
-					<br /><br />
-					<input class="button" type="submit" value="DODAJ" />
-					<br /><br />
-					<input name="type" type="hidden" value="add" />
-				</form>
-	<?php
-		session_start();
-		if(ISSET($_SESSION['error'])) {
-			echo "<p class='error'>".$_SESSION['error']."</p><br />";
-			unset($_SESSION['error']);
-		}
-	?>
+				<a href="add.php">
+					Zarejestruj się
+				</a>
+				<br />
+				<a href="addform.php">
+					Dodaj imię
+				</a>
+				<br />
+				<a href="names.php">
+					Pokaż imiona
+				</a>
+				<br />
+				<a href="reports.php">
+					Pokaż zgłoszenia
+				</a>
+				<br />
 			</div>
-		</div>
-		<div id="bottom">
-			<h4>
-				Dodatkowe linki
-			</h4>
-			<a href="names.php">
-				Pokaż imiona
-			</a>
-			<br />
-			<a href="reports.php">
-				Pokaż zgłoszenia
-			</a>
 		</div>
 	</body>
 </html>

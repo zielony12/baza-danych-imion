@@ -4,17 +4,17 @@
 	$type = $_POST['type'];
 
 	// imie
-	if(isset($_POST['e1'])) {
-		$name = filter_var($_POST['e1'], FILTER_SANITIZE_STRING);
+	if(isset($_POST['e_name'])) {
+		$name = filter_var($_POST['e_name'], FILTER_SANITIZE_STRING);
 	}
 
 	// nazwisko
-	if(isset($_POST['e2'])) {
-		$surname = $_POST['e2'];
+	if(isset($_POST['e_surname'])) {
+		$surname = $_POST['e_surname'];
 	}
 
 	// kod
-	$code = $_POST['e3'];
+	$code = $_POST['e_code'];
 
 
 	// powód
@@ -73,12 +73,12 @@
 		if($type == "add") {
 			if($db_connection -> query("INSERT INTO names VALUES (NULL, '$name', '$surname')")) {
 				$_SESSION['error'] = "Pomyślnie dodano $name $surname do bazy danych";
-				header('Location: index.php');
+				header('Location: addform.php');
 			}
 		} elseif($type == "report") {
 			if($db_connection -> query("INSERT INTO reports VALUES (NULL, '$id', '$name', '$surname', '$reason')")) {
 				$_SESSION['error'] = "Wysłano zgłoszenie dla $name $surname";
-				header('Location: index.php');
+				header('Location: addform.php');
 				if(isset($_SESSION['id'])) {
 					unset($_SESSION['id']);
 				}
@@ -86,7 +86,7 @@
 		}
 	} else {
 		if($type == "add") {
-			header('Location: index.php');
+			header('Location: addform.php');
 		} elseif($type == "report") {
 			header('Location: reportform.php');
 		}
@@ -96,4 +96,5 @@
 			$_SESSION['error'] = "Wystąpił niezidentyfikowany błąd. Przepraszamy.";
 		}
 	}
+	$db_connection -> close();
 ?>

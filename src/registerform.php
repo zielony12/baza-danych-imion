@@ -11,31 +11,19 @@
 		<link rel="stylesheet" href="styles.css">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>
-			Zgłoś
+			Zarejestruj
 		</title>
 	</head>
 	<body>
 		<div id="container">
 			<div id="dodaj">
 				<h4>
-					Zgłoś
+					Zarejestruj
 				</h4>
-				<form name="report" method="POST" action="add.php">
-					<input class="entry" name="e_name" type="text" placeholder="Imie"
-<?php
-	if(isset($_SESSION['name'])) {
-		echo 'value="'.$_SESSION['name'].'"';
-	}
-?>
-					/>
+				<form name="register" method="POST" action="add.php">
+					<input class="entry" name="e_login" type="text" placeholder="Login" value="<?php echo $_SESSION['login']; ?>" />
 					<br /><br />
-					<input class="entry" name="e_surname" type="text" placeholder="Nazwisko"
-<?php
-	if(isset($_SESSION['surname'])) {
-		echo 'value="'.$_SESSION['surname'].'"';
-	}
-?>
-					/>
+					<input class="entry" name="e_email" type="text" placeholder="" value="<?php echo $_SESSION['email']; ?>" />
 					<br /><br />
 					<label>
 						<input class="radio" name="reason" value="To moje imie" type="radio" />
@@ -54,7 +42,7 @@
 					<br /><br />
 					<img border="2" src="verify.php" width="170" height="25" />
 					<br />
-					<input class="entry" name="e_code" type="text" placeholder="Kod z obrazka" />
+					<input class="entry" name="e3" type="text" placeholder="Kod z powyższego obrazka" />
 					<br /><br />
 					<label>
 						<input name="accept" type="checkbox" />
