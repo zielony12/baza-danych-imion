@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 08, 2021 at 02:46 PM
+-- Generation Time: Aug 11, 2021 at 11:08 AM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.8
 
@@ -29,16 +29,10 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `names` (
   `id` int(11) NOT NULL,
+  `name_author_id` text CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL,
   `name` text CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL,
   `surname` text CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
-
---
--- Dumping data for table `names`
---
-
-INSERT INTO `names` (`id`, `name`, `surname`) VALUES
-(1, 'Jan', 'Kowalski');
 
 --
 -- Indexes for dumped tables
@@ -59,7 +53,7 @@ ALTER TABLE `names`
 -- AUTO_INCREMENT for table `names`
 --
 ALTER TABLE `names`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

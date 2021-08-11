@@ -1,6 +1,7 @@
 <?php
 	session_start();
 	require_once "connect.php";
+
 	try {
 		$db_connection = new mysqli($db_host, $db_user, $db_password, $db_name);
 		mysqli_set_charset($db_connection, "utf8");
@@ -8,7 +9,7 @@
 		if($db_connection -> connect_errno != 0) {
 			throw new Exception(mysqli_connect_errno());
 		} else {
-			$query_result = mysqli_query($db_connection, "SELECT * FROM `reports` ORDER BY `id` ASC");
+			$query_result = $db_connection -> query("SELECT * FROM `reports` ORDER BY `id` ASC");
 		}
 	} catch(Exception $e) {
 		$_POST['error'] = $e;
@@ -19,6 +20,7 @@
 <!DOCTYPE html>
 <html>
 	<head lang="pl">
+		<link rel="stylesheet" href="styles.css">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>
 			Lista imion
@@ -39,6 +41,12 @@
 					</th>
 					<th>
 						Nazwisko
+					</th>
+					<th>
+						Autor im.
+					</th>
+					<th>
+						Autor zgł.
 					</th>
 					<th>
 						Powód
@@ -64,6 +72,28 @@
 					<td>
 <?php
 	echo $row['surname'];
+?>
+					</td>
+					<td>
+<?php
+	$name = $row['name'];
+	$surname = $row['surname'];
+	$name_author_id = mysqli_fetch_assoc($db_connection -> query("SELECT `name_author_id` FROM `names` WHERE `name` = '$name' AND `surname` = '$surname'"))['name_author_id'];
+	if(isset(mysqli_fetch_assoc($db_connection -> query("SELECT `login` FROM `users` WHERE `id` = '$name_author_id'"))['login'])) {
+		echo mysqli_fetch_assoc($db_connection -> query("SELECT `login` FROM `users` WHERE `id` = '$name_author_id'"))['login'];
+	} else {
+		echo "<div style=\"color:red\">ERROR</div>";
+	}
+?>
+					</td>
+					<td>
+<?php
+	$report_author_id = $row['name_author_id'];
+	if(isset(mysqli_fetch_assoc($db_connection -> query("SELECT `login` FROM `users` WHERE `id` = '$report_author_id'"))['login'])) {
+		echo mysqli_fetch_assoc($db_connection -> query("SELECT `login` FROM `users` WHERE `id` = '$report_author_id'"))['login'];
+	} else {
+		echo "<div style=\"color:red\">ERROR</div>";
+	}
 ?>
 					</td>
 					<td>

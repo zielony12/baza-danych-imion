@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 08, 2021 at 02:46 PM
+-- Generation Time: Aug 11, 2021 at 11:08 AM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.8
 
@@ -40,7 +40,9 @@ INSERT INTO `regulamin` (`id`, `content`) VALUES
 (1, 'Zakazane jest tutaj publikowanie cudzych danych osobowych bez zgody ich wlasciciela.'),
 (2, 'Nie wolno zostawiac tutaj zadnych ukrytych \"wiadomosci\", oraz pisac zadnych zdan.'),
 (3, 'Imienia nie powinny zawierac wulgaryzmow.'),
-(4, 'Wpisujac swoje imie oraz nazwisko do bazy danych, dajesz nam pozwolenie na udostepnianie go publicznie.');
+(4, 'Wpisujac swoje imie oraz nazwisko do bazy danych, dajesz nam pozwolenie na udostepnianie go publicznie.'),
+(5, 'Rejestrując się zezwalasz na wyświetlanie podanego przy rejestracji loginu publicznie.'),
+(6, 'Zgłaszanie imion które są zgodne z regulaminem może zakończyć się usunięciem konta.');
 
 --
 -- Indexes for dumped tables
@@ -61,7 +63,7 @@ ALTER TABLE `regulamin`
 -- AUTO_INCREMENT for table `regulamin`
 --
 ALTER TABLE `regulamin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

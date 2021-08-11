@@ -1,5 +1,10 @@
 <?php
 	session_start();
+	if((!isset($_SESSION['islogged'])) || (!$_SESSION['islogged'])) {
+		$_SESSION['error'] = "Musisz się najpierw zalogować";
+		header('Location: loginform.php');
+		exit();
+	}
 	if((isset($_POST['name'])) && (isset($_POST['surname']))) {
 		$_SESSION['name'] = $_POST['name'];
 		$_SESSION['surname'] = $_POST['surname'];

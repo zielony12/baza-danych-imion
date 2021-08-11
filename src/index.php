@@ -10,10 +10,33 @@
 	<body>
 		<div id="container">
 			<div id="dodaj">
+<?php
+	session_start();
+	if(isset($_SESSION['error'])) {
+		echo $_SESSION['error']."<br />";
+		unset($_SESSION['error']);
+	}
+?>
 				<h4>
 					Menu
 				</h4>
-				<a href="add.php">
+<?php
+	if((isset($_SESSION['islogged'])) && ($_SESSION['islogged'])) {
+		echo "
+			<a href=\"panel.php\">
+				Panel
+			</a>
+		";
+	} else {
+		echo "
+			<a href=\"loginform.php\">
+				Zaloguj się
+			</a>
+		";
+	}
+?>
+				<br />
+				<a href="registerform.php">
 					Zarejestruj się
 				</a>
 				<br />

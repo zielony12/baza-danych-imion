@@ -1,3 +1,11 @@
+<?php
+	session_start();
+	if((!isset($_SESSION['islogged'])) || (!$_SESSION['islogged'])) {
+		$_SESSION['error'] = "Musisz się najpierw zalogować";
+		header('Location: loginform.php');
+		exit();
+	}
+?>
 <!DOCTYPE html>
 <html lang="pl">
 	<head>
@@ -32,7 +40,6 @@
 					<input name="type" type="hidden" value="add" />
 				</form>
 	<?php
-		session_start();
 		if(ISSET($_SESSION['error'])) {
 			echo "<p class='error'>".$_SESSION['error']."</p><br />";
 			unset($_SESSION['error']);

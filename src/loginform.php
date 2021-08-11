@@ -11,36 +11,22 @@
 		<link rel="stylesheet" href="styles.css">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>
-			Zarejestruj
+			Zaloguj
 		</title>
 	</head>
 	<body>
 		<div id="container">
 			<div id="dodaj">
 				<h4>
-					Zarejestruj
+					Zaloguj
 				</h4>
-				<form name="register" method="POST" action="add.php">
+				<form name="login" method="POST" action="login.php">
 					<input class="entry" name="e_login" type="text" placeholder="Login" />
-					<br /><br />
-					<input class="entry" name="e_email" type="text" placeholder="E-mail" />
 					<br /><br />
 					<input class="entry" name="e_password" type="password" placeholder="Hasło" />
 					<br /><br />
-					<input class="entry" name="e_password2" type="password" placeholder="Powtórz hasło" />
+					<input class="button" type="submit" value="ZALOGUJ" />
 					<br /><br />
-					<img border="2" src="verify.php" width="170" height="25" />
-					<br />
-					<input class="entry" name="e_code" type="text" placeholder="Kod z obrazka" />
-					<br /><br />
-					<label>
-						<input name="accept" type="checkbox" />
-						Akceptuję <a href="regulamin.php">regulamin</a>
-					</label>
-					<br /><br />
-					<input class="button" type="submit" value="ZAREJESTRUJ" />
-					<br /><br />
-					<input name="type" type="hidden" value="register" />
 				</form>
 <?php
 	if(ISSET($_SESSION['error'])) {

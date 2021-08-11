@@ -24,17 +24,15 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `reports`
+-- Table structure for table `users`
 --
 
-CREATE TABLE `reports` (
+CREATE TABLE `users` (
   `id` int(11) NOT NULL,
-  `report_author_id` text CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL,
-  `name_id` text CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL,
-  `name_author_id` text CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL,
-  `name` text CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL,
-  `surname` text CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL,
-  `reason` text CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL
+  `login` text CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL,
+  `email` text CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL,
+  `password` text CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL,
+  `names_added` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
@@ -42,9 +40,9 @@ CREATE TABLE `reports` (
 --
 
 --
--- Indexes for table `reports`
+-- Indexes for table `users`
 --
-ALTER TABLE `reports`
+ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `id` (`id`);
 
@@ -53,9 +51,9 @@ ALTER TABLE `reports`
 --
 
 --
--- AUTO_INCREMENT for table `reports`
+-- AUTO_INCREMENT for table `users`
 --
-ALTER TABLE `reports`
+ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
