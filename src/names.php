@@ -30,7 +30,7 @@
 		<h4>
 			Lista dodanych imion
 		</h4>
-		<table id="imienia" border="1px">
+		<table id="imienia">
 			<thead>
 				<tr>
 					<th>

@@ -23,14 +23,14 @@
 		<link rel="stylesheet" href="styles.css">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>
-			Lista imion
+			Lista zgłoszeń
 		</title>
 	</head>
 	<body>
 		<h4>
-			Lista dodanych imion
+			Lista dodanych zgłoszeń
 		</h4>
-		<table id="zgloszenia" border="1px">
+		<table id="zgloszenia">
 			<thead>
 				<tr>
 					<th>

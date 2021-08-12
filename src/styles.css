@@ -1,4 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
 * {
+  font-family: Lato;
   margin: 0px;
   outline: 0px;
 }
@@ -7,34 +10,111 @@ body {
   background-color: white;
 }
 
-.button,
-.entry {
+table, td, th {
   border: 1px solid black;
-  width: 170px;
-  height: 25px;
 }
 
-.button {
-
+#topbar-left {
+  float: left;
+  justify-content: left;
 }
 
-.button:hover {
-  background-color: lightgray;
+#topbar-right{
+  float: right;
+  justify-content: right;
+  border-left: 1px solid lightgray;
 }
 
-.button:active {
-  background-color: gray;
+#topbar-left,
+#topbar-right {
+  display: flex;
+  flex-direction: row;
+  width: calc(50% - 1px);
+  height: 20px;
+}
+
+.topbar-item {
+  display: flex;
+  overflow: hidden;
+  width: 100px;
+  height: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+#topbar {
+  padding: 5px;
+  width: 100;
+  height: 20px;
+  border-bottom: 1px solid black;
 }
 
 #container {
-  margin: 20px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
 }
 
-#dodaj {
-  text-align: center;
-  width: 200px;
-  background-color: orange;
+#content {
+  padding: 10px;
+  overflow: hidden;
+  text-align: justify;
+}
+
+@media screen and (max-device-width: 480px) and (orientation: portrait) {
+  * {
+    font-size: 103%;
+  }
+  #topbar {
+    font-size: 90%;
+    padding: 0px;
+    height: 61px;
+  }
+  #topbar-right,
+  #topbar-left {
+    border-left: 0px;
+    width: 100%;
+    height: 30px;
+    float: left;
+    justify-content: left;
+  }
+  #topbar-right {
+    border-top: 1px solid lightgray;
+    justify-content: center;
+  }
+  .topbar-item {
+    text-align: center;
+    margin: auto;
+  }
+}
+
+@media screen and (max-device-width: 640px) and (orientation: landscape) {
+  * {
+    font-size: 103%;
+  }
+  #topbar {
+    padding: 0px;
+    height: 30px;
+  }
+  .topbar-item {
+    height: 30px;
+    margin: auto;
+  }
+}
+
+@media screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+  * {
+    font-size: 101%;
+  }
+  #topbar {
+    height: 40px;
+  }
+  #topbar-left,
+  #topbar-right {
+    height: 40px;
+  }
+  .topbar-item {
+    height: 40px;
+    margin: auto;
+  }
 }

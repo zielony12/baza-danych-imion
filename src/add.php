@@ -12,12 +12,12 @@
 
 	// imie
 	if(isset($_POST['e_name'])) {
-		$name = strtolower(filter_var($_POST['e_name'], FILTER_SANITIZE_STRING));
+		$name = mb_strtolower($_POST['e_name']);
 	}
 
 	// nazwisko
 	if(isset($_POST['e_surname'])) {
-		$surname = strtolower(filter_var($_POST['e_surname'], FILTER_SANITIZE_STRING));
+		$surname = mb_strtolower($_POST['e_surname']);
 	}
 
 	// login
@@ -34,12 +34,12 @@
 
 	// hasło
 	if(isset($_POST['e_password'])) {
-		$password = strtolower($_POST['e_password']);
+		$password = mb_strtolower($_POST['e_password']);
 	}
 
 	// hasło 2
 	if(isset($_POST['e_password2'])) {
-		$password2 = strtolower($_POST['e_password2']);
+		$password2 = mb_strtolower($_POST['e_password2']);
 	}
 
 	// kod
@@ -90,12 +90,38 @@
 		$result = $query_result -> num_rows;
 	}
 
+	function split_mb($str) {
+  	$length = mb_strlen($str);
+    $chars = array();
+    for ($i=0; $i<$length; $i++) {
+    	$chars[] = mb_substr($str, $i, 1);
+    }
+    $chars[] = "";
+    return $chars;
+	}
+
 	if($type == "add") {
+		$name_allowed_chars = array('A', 'Ą', 'B', 'C', 'Ć', 'D', 'E', 'Ę','F', 'G', 'H', 'I', 'J', 'K', 'L', 'Ł', 'M', 'N', 'Ń','O', 'Ó', 'P', 'R', 'S', 'Ś', 'T', 'U', 'W', 'X', 'Y', 'Z', 'Ź', 'Ż');
 		if((!isset($name_author_id)) || (empty($name_author_id))) {
 			$error = "Wystąpił problem z pobraniem wymaganych danych. Przepraszamy.";
 		}
+		$name_as_arr = split_mb($name);
+		$surname_as_arr = split_mb($surname);
+		$name_valid_chars = 0;
+		$surname_valid_chars = 0;
+		foreach($name_allowed_chars as $name_allowed_char) {
+			if(in_array(mb_strtolower($name_allowed_char), $name_as_arr)) {
+				$name_valid_chars ++;
+			}
+			if(in_array(mb_strtolower($name_allowed_char), $surname_as_arr)) {
+				$surname_valid_chars ++;
+			}
+		}
+		if(($name_valid_chars != mb_strlen($name)) || ($surname_valid_chars != mb_strlen($surname))) {
+			$error = "Twoje imię lub nazwisko zawiera niedozwolone znaki.";
+		}
 		if((strlen($name) < 3) || (strlen($surname) < 3) || (strlen($name) > 12) || (strlen($surname) > 12)) {
-			$error = "Twoje imie i nazwisko nie może być mniejsze od 3 znaków oraz większe od 12.";
+			$error = "Twoje imię i nazwisko nie może być mniejsze od 3 znaków oraz większe od 12.";
 		}
 		if($result > 0) {
 			$error = "W bazie danych istnieje już takie imie.";
@@ -115,6 +141,17 @@
 			$id = $row['id'];
 		}
 	} elseif($type == "register") {
+		$login_allowed_chars = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'W', 'X', 'Y', 'Z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0');
+		$name_as_arr = split_mb($name);
+		$valid_chars = 0;
+		foreach($name_allowed_chars as $name_allowed_char) {
+			if(in_array(mb_strtolower($name_allowed_char), $name_as_arr)) {
+				$valid_chars ++;
+			}
+		}
+		if($valid_chars != mb_strlen($name)) {
+			$error = "Twoje imię zawiera niedozwolone znaki.";
+		}
 		if((!isset($email)) || (empty($email)) || (!filter_var($email, FILTER_VALIDATE_EMAIL))) {
 			$error = "Musisz podać poprawny email.";
 		}
@@ -141,6 +178,8 @@
 
 	if($isOk) {
 		if($type == "add") {
+			$name = mb_strtoupper($name[0]) . mb_substr($name, 1, mb_strlen($name));
+			$surname = mb_strtoupper($surname[0]) . mb_substr($surname, 1, mb_strlen($surname));
 			if(($db_connection -> query("INSERT INTO `names` VALUES (NULL, '$name_author_id', '$name', '$surname')")) && ($db_connection -> query("UPDATE `users` SET `names_added` = `names_added` + 1 WHERE `id` = '$name_author_id'"))) {
 				$_SESSION['error'] = "Pomyślnie dodano $name $surname do bazy danych";
 				header('Location: addform.php');
