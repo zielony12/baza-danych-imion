@@ -21,7 +21,57 @@
 	</head>
 	<body>
 		<div id="container">
-			<div id="dodaj">
+			<!--topbar begin-->
+			<div id="topbar">
+				<div id="topbar-left">
+					<div class="topbar-item">
+						<a href="index.php">
+							Indeks
+						</a>
+					</div>
+					<div class="topbar-item">
+						<a href="names.php">
+							Imiona
+						</a>
+					</div>
+<?php
+	if((isset($_SESSION['islogged'])) && ($_SESSION['islogged'])) {
+		echo "<div class=\"topbar-item\"><a href=\"addform.php\">Dodaj</a></div>";
+	}
+?>
+				</div>
+				<div id="topbar-right">
+					<div class="topbar-item">
+<?php
+	if((isset($_SESSION['islogged'])) && ($_SESSION['islogged'])) {
+		echo "<a href=\"panel.php\">".$_SESSION['login']."</a>";
+	} else {
+		echo "<a href=\"loginform.php\">Zaloguj</a>";
+	}
+?>
+					</div>
+					<div class="topbar-item">
+<?php
+	if((isset($_SESSION['islogged'])) && ($_SESSION['islogged'])) {
+		echo "<a href=\"logout.php\">Wyloguj</a>";
+	} else {
+		echo "<a href=\"registerform.php\">Zarejestruj</a>";
+	}
+?>
+					</div>
+				</div>
+			</div>
+			<!--topbar end-->
+			<div id="content">
+<?php
+		if(isset($_SESSION['error'])) {
+			echo "<div id=\"session-info\">
+						<div class=\"info\">i</div>";
+			echo $_SESSION['error']."<br />";
+			echo "</div>";
+			unset($_SESSION['error']);
+		}
+?>
 				<h4>
 					Zgłoś
 				</h4>
@@ -43,17 +93,17 @@
 					/>
 					<br /><br />
 					<label>
-						<input class="radio" name="reason" value="To moje imie" type="radio" />
+						<input class="radio" name="reason" value="reason1" type="radio" />
 						To moje imie
 					</label>
 					<br /><br />
 					<label>
-						<input class="radio" name="reason" value="Imie zawiera wulgaryzmy" type="radio" />
+						<input class="radio" name="reason" value="reason2" type="radio" />
 						Imie zawiera wulgaryzmy
 					</label>
 					<br /><br />
 					<label>
-						<input class="radio" name="reason" value="Imie w inny sposób niszczy zasady regulaminu" type="radio" checked="true" />
+						<input class="radio" name="reason" value="reason3" type="radio" checked="true" />
 						Imie w inny sposób niszczy zasady regulaminu
 					</label>
 					<br /><br />

@@ -4,6 +4,11 @@
 		header('Location: loginform.php');
 		exit();
 	}
+	require_once "connect.php";
+	$db_connection = new mysqli($db_host, $db_user, $db_password, $db_name);
+	$db_connection -> query("SET NAMES 'utf8'");
+	mysqli_set_charset($db_connection, "utf-8");
+	$login = $_SESSION['login'];
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -16,36 +21,54 @@
 	</head>
 	<body>
 		<div id="container">
-			<div id="dodaj">
-				<br />
-				<?php
-					echo "Witaj, ".$_SESSION['login']."!";
-					echo "<br />";
-					require_once "connect.php";
-					try {
-						$db_connection = new mysqli($db_host, $db_user, $db_password, $db_name);
-						$db_connection -> query("SET NAMES 'utf8'");
-						mysqli_set_charset($db_connection, "utf-8");
-						if($db_connection -> connect_errno != 0) {
-							throw new Exception(mysqli_connect_errno());
-						}
-					} catch(Exception $e) {
-						$_SESSION['error'] = "Nie można się połączyć z bazą danych. Przepraszamy.";
-						header('Location: index.php');
-						exit();
-					}
-					$login = $_SESSION['login'];
-					echo "Masz ".mysqli_fetch_assoc($db_connection -> query("SELECT `names_added` FROM `users` WHERE `login` = '$login'"))['names_added']." imion.";
-				?>
-				<br /><br />
-				<form name="logout" method="POST" action="logout.php">
-					<input type="submit" value="Wyloguj" />
-				</form>
-				<br />
-				<form name="add" method="POST" action="addform.php">
-					<input type="submit" value="Dodaj imie" />
-				</form>
-				<br />
+			<!--topbar begin-->
+			<div id="topbar">
+				<div id="topbar-left">
+					<div class="topbar-item">
+						<a href="index.php">
+							Indeks
+						</a>
+					</div>
+					<div class="topbar-item">
+						<a href="names.php">
+							Imiona
+						</a>
+					</div>
+<?php
+	if((isset($_SESSION['islogged'])) && ($_SESSION['islogged'])) {
+		echo "<div class=\"topbar-item\"><a href=\"addform.php\">Dodaj</a></div>";
+	}
+?>
+				</div>
+				<div id="topbar-right">
+					<div class="topbar-item">
+<?php
+	if((isset($_SESSION['islogged'])) && ($_SESSION['islogged'])) {
+		echo "<a href=\"panel.php\">".$_SESSION['login']."</a>";
+	} else {
+		echo "<a href=\"loginform.php\">Zaloguj</a>";
+	}
+?>
+					</div>
+					<div class="topbar-item">
+<?php
+	if((isset($_SESSION['islogged'])) && ($_SESSION['islogged'])) {
+		echo "<a href=\"logout.php\">Wyloguj</a>";
+	} else {
+		echo "<a href=\"registerform.php\">Zarejestruj</a>";
+	}
+?>
+					</div>
+				</div>
+			</div>
+			<!--topbar end-->
+			<div id="content">
+				<div id="center">
+					<?php
+						echo "<h3>".$login."</h3>";
+						echo "Masz ".mysqli_fetch_assoc($db_connection -> query("SELECT `names_added` FROM `users` WHERE `login` = '$login'"))['names_added']." imion.";
+					 ?>
+				</div>
 			</div>
 		</div>
 	</body>

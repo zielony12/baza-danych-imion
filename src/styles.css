@@ -10,8 +10,88 @@ body {
   background-color: white;
 }
 
-table, td, th {
+table {
+  margin: 30px;
+  padding: 20px;
+  width: 100%;
+}
+
+h3 {
+  margin: 2px;
+  margin-top: 4px;
+  padding: 3px;
+  padding-bottom: 3px;
+}
+
+.txt {
+  margin: 2px;
+  padding: 5px;
+}
+
+a,
+.url {
+  font-size: 100%;
+  padding: 0px;
+  text-decoration: underline;
+  background-color: transparent;
+  border: 0px;
+  color: #339;
+}
+
+a:hover,
+.url:hover {
+  cursor: pointer;
+  text-decoration: none;
+  background-color: #eee;
+}
+
+.code {
+  margin: 2px;
+  padding: 3px;
+  background-color: lightblue;
+}
+
+.entry,
+.button,
+.code {
+  margin: 2px;
+  padding: 5px;
+  width: 170px;
+  height: 25px;
+  border-radius: 3px;
   border: 1px solid black;
+}
+
+.button {
+  width: 100px;
+  height: 30px;
+  background-color: white;
+}
+
+.button:hover {
+  background-color: #eee;
+}
+
+.button:active {
+  background-color: gray;
+}
+
+.info {
+  text-align: center;
+  color: blue;
+  float: left;
+  background-color: white;
+  border: 1px solid gray;
+  margin-right: 6px;
+  height: 20px;
+  width: 20px;
+  border-radius: 25px;
+}
+
+#session-info {
+  background-color: lightblue;
+  margin: 5px;
+  padding: 10px;
 }
 
 #topbar-left {
@@ -50,23 +130,46 @@ table, td, th {
 }
 
 #container {
+  position: absolute;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  height: 100%;
 }
 
 #content {
+  text-align: justify;
+  display: flex;
+  justify-content: center;
   padding: 10px;
   overflow: hidden;
-  text-align: justify;
+  background-color: lightgray;
+  height: 100%;
+  padding: 0px;
+}
+
+#content #center {
+  background-color: white;
+  width: 70%;
+  border: 1px solid lightgray;
+  padding: 5px;
 }
 
 @media screen and (max-device-width: 480px) and (orientation: portrait) {
   * {
     font-size: 103%;
   }
+  table {
+    font-size: 80%;
+    margin: 0px;
+    padding: 0px;
+  }
+  #content #center {
+    width: 100%;
+  }
   #topbar {
-    font-size: 90%;
+    font-size: 100%;
     padding: 0px;
     height: 61px;
   }
@@ -92,6 +195,9 @@ table, td, th {
   * {
     font-size: 103%;
   }
+  #content #center {
+    width: 95%;
+  }
   #topbar {
     padding: 0px;
     height: 30px;
@@ -105,6 +211,9 @@ table, td, th {
 @media screen and (min-device-width: 768px) and (max-device-width: 1024px) {
   * {
     font-size: 101%;
+  }
+  #content #center {
+    width: 80%;
   }
   #topbar {
     height: 40px;

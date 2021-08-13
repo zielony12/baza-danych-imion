@@ -16,7 +16,57 @@
 	</head>
 	<body>
 		<div id="container">
-			<div id="dodaj">
+			<!--topbar begin-->
+			<div id="topbar">
+				<div id="topbar-left">
+					<div class="topbar-item">
+						<a href="index.php">
+							Indeks
+						</a>
+					</div>
+					<div class="topbar-item">
+						<a href="names.php">
+							Imiona
+						</a>
+					</div>
+<?php
+	if((isset($_SESSION['islogged'])) && ($_SESSION['islogged'])) {
+		echo "<div class=\"topbar-item\"><a href=\"addform.php\">Dodaj</a></div>";
+	}
+?>
+				</div>
+				<div id="topbar-right">
+					<div class="topbar-item">
+<?php
+	if((isset($_SESSION['islogged'])) && ($_SESSION['islogged'])) {
+		echo "<a href=\"panel.php\">".$_SESSION['login']."</a>";
+	} else {
+		echo "<a href=\"loginform.php\">Zaloguj</a>";
+	}
+?>
+					</div>
+					<div class="topbar-item">
+<?php
+	if((isset($_SESSION['islogged'])) && ($_SESSION['islogged'])) {
+		echo "<a href=\"logout.php\">Wyloguj</a>";
+	} else {
+		echo "<a href=\"registerform.php\">Zarejestruj</a>";
+	}
+?>
+					</div>
+				</div>
+			</div>
+			<!--topbar end-->
+			<div id="content">
+<?php
+		if(isset($_SESSION['error'])) {
+			echo "<div id=\"session-info\">
+						<div class=\"info\">i</div>";
+			echo $_SESSION['error']."<br />";
+			echo "</div>";
+			unset($_SESSION['error']);
+		}
+?>
 				<h4>
 					Zarejestruj
 				</h4>
@@ -29,7 +79,7 @@
 					<br /><br />
 					<input class="entry" name="e_password2" type="password" placeholder="Powtórz hasło" />
 					<br /><br />
-					<img border="2" src="verify.php" width="170" height="25" />
+					<img class="code" src="verify.php" />
 					<br />
 					<input class="entry" name="e_code" type="text" placeholder="Kod z obrazka" />
 					<br /><br />
@@ -42,12 +92,6 @@
 					<br /><br />
 					<input name="type" type="hidden" value="register" />
 				</form>
-<?php
-	if(ISSET($_SESSION['error'])) {
-		echo "<p class='error'>".$_SESSION['error']."</p><br />";
-		unset($_SESSION['error']);
-	}
-?>
 			</div>
 		</div>
 	</body>

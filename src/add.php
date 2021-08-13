@@ -12,12 +12,12 @@
 
 	// imie
 	if(isset($_POST['e_name'])) {
-		$name = mb_strtolower($_POST['e_name']);
+		$name = filter_var(mb_strtolower($_POST['e_name']), FILTER_SANITIZE_STRING);
 	}
 
 	// nazwisko
 	if(isset($_POST['e_surname'])) {
-		$surname = mb_strtolower($_POST['e_surname']);
+		$surname = filter_var(mb_strtolower($_POST['e_surname']), FILTER_SANITIZE_STRING);
 	}
 
 	// login
@@ -29,7 +29,7 @@
 
 	// email
 	if(isset($_POST['e_email'])) {
-		$email = strtolower($_POST['e_email']);
+		$email = mb_strtolower($_POST['e_email']);
 	}
 
 	// hasło
@@ -43,7 +43,9 @@
 	}
 
 	// kod
-	$code = $_POST['e_code'];
+	if(isset($_POST['e_code'])) {
+		$code = $_POST['e_code'];
+	}
 
 	// czy zaakceptowano regulamin?
 	if(isset($_POST['accept'])) {
@@ -53,6 +55,15 @@
 	// powód
 	if(isset($_POST['reason'])) {
 		$reason = $_POST['reason'];
+	}
+	if(isset($reason)) {
+		if($reason == "reason1") {
+			$reason = "To moje imie";
+		} elseif($reason == "reason2") {
+			$reason = "Imie zawiera wulgaryzmy";
+		} elseif($reason == "reason3") {
+			$reason = "Imie w inny sposób niszczy zasady regulaminu";
+		}
 	}
 
 	// czy jest wszystko w porządku?
@@ -67,16 +78,10 @@
 
 	require_once "connect.php";
 
-	try {
-		$db_connection = new mysqli($db_host, $db_user, $db_password, $db_name);
-		$db_connection -> query("SET NAMES 'utf8'");
-		mysqli_set_charset($db_connection, "utf-8");
-		if($db_connection -> connect_errno != 0) {
-			throw new Exception(mysqli_connect_errno());
-		}
-	} catch(Exception $e) {
-		$error = "Nie można się połączyć z bazą danych. Przepraszamy.";
-	}
+	$db_connection = new mysqli($db_host, $db_user, $db_password, $db_name);
+	$db_connection -> query("SET NAMES 'utf8'");
+	mysqli_set_charset($db_connection, "utf-8");
+
 	if(($type == "add") || ($type == "report")) {
 		$query_result = mysqli_query($db_connection, "SELECT * FROM `names` WHERE `name` = '$name' AND `surname` = '$surname'");
 		$result = $query_result -> num_rows;
@@ -101,24 +106,8 @@
 	}
 
 	if($type == "add") {
-		$name_allowed_chars = array('A', 'Ą', 'B', 'C', 'Ć', 'D', 'E', 'Ę','F', 'G', 'H', 'I', 'J', 'K', 'L', 'Ł', 'M', 'N', 'Ń','O', 'Ó', 'P', 'R', 'S', 'Ś', 'T', 'U', 'W', 'X', 'Y', 'Z', 'Ź', 'Ż');
 		if((!isset($name_author_id)) || (empty($name_author_id))) {
 			$error = "Wystąpił problem z pobraniem wymaganych danych. Przepraszamy.";
-		}
-		$name_as_arr = split_mb($name);
-		$surname_as_arr = split_mb($surname);
-		$name_valid_chars = 0;
-		$surname_valid_chars = 0;
-		foreach($name_allowed_chars as $name_allowed_char) {
-			if(in_array(mb_strtolower($name_allowed_char), $name_as_arr)) {
-				$name_valid_chars ++;
-			}
-			if(in_array(mb_strtolower($name_allowed_char), $surname_as_arr)) {
-				$surname_valid_chars ++;
-			}
-		}
-		if(($name_valid_chars != mb_strlen($name)) || ($surname_valid_chars != mb_strlen($surname))) {
-			$error = "Twoje imię lub nazwisko zawiera niedozwolone znaki.";
 		}
 		if((strlen($name) < 3) || (strlen($surname) < 3) || (strlen($name) > 12) || (strlen($surname) > 12)) {
 			$error = "Twoje imię i nazwisko nie może być mniejsze od 3 znaków oraz większe od 12.";
@@ -164,8 +153,8 @@
 		if((strlen($password) < 6) || (strlen($password) > 20)) {
 			$error = "Twoje hasło nie może być mniejsze od 6 znaków oraz większe od 20.";
 		}
-		if((strlen($login) < 3) || (strlen($login) > 12)) {
-			$error = "Twój login nie może być mniejszy od 3 znaków oraz większy od 12.";
+		if((strlen($login) < 3) || (strlen($login) > 10)) {
+			$error = "Twój login nie może być mniejszy od 3 znaków oraz większy od 10.";
 		}
 		if(!ctype_alnum($login)) {
 			$error = "Twój login zawiera niedozwolone znaki.";

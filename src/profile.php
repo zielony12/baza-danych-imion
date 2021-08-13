@@ -3,17 +3,25 @@
 	require_once "connect.php";
 	try {
 		$db_connection = new mysqli($db_host, $db_user, $db_password, $db_name);
-		mysqli_set_charset($db_connection, "utf8");
+		$db_connection -> query("SET NAMES 'utf8'");
+		mysqli_set_charset($db_connection, "utf-8");
 		if($db_connection -> connect_errno != 0) {
 			throw new Exception(mysqli_connect_errno());
-		} else {
-			$query_result = mysqli_query($db_connection, "SELECT * FROM `regulamin` ORDER BY `id` ASC");
 		}
 	} catch(Exception $e) {
-		$_POST['error'] = $e;
+		$_SESSION['error'] = "Nie można się połączyć z bazą danych. Przepraszamy.";
 		header('Location: index.php');
 		exit();
 	}
+	$login = $_GET['login'];
+	$query_result = $db_connection -> query("SELECT * FROM `users` WHERE `login` = '$login'");
+	$result = $query_result -> num_rows;
+	if($result == 0) {
+		$_SESSION['error'] = "Nie można odnaleźć użytkownika o podanym loginie";
+		header('Location: index.php');
+		exit();
+	}
+	$id = mysqli_fetch_assoc($db_connection -> query("SELECT `id` FROM `users` WHERE `login` = '$login'"))['id'];
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -21,7 +29,7 @@
 		<link rel="stylesheet" href="styles.css">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>
-			Regulamin
+			Imiona
 		</title>
 	</head>
 	<body>
@@ -68,15 +76,20 @@
 			</div>
 			<!--topbar end-->
 			<div id="content">
+<?php
+		if(isset($_SESSION['error'])) {
+			echo "<div id=\"session-info\">
+						<div class=\"info\">i</div>";
+			echo $_SESSION['error']."<br />";
+			echo "</div>";
+			unset($_SESSION['error']);
+		}
+?>
 				<h4>
-					Regulamin
+					Profil użytkownika <?php echo $login; ?>
 				</h4>
-				<div id="regulamin">
-		<?php
-			while($row = mysqli_fetch_assoc($query_result)) {
-				echo "> ".$row['content']."<br />";
-			}
-		?>
+				<div>
+					Ilość dodanych imion: <?php echo mysqli_fetch_assoc($db_connection -> query("SELECT * FROM `users` WHERE `id` = '$id'"))['names_added']; ?>
 				</div>
 			</div>
 		</div>

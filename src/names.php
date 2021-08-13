@@ -27,75 +27,123 @@
 		</title>
 	</head>
 	<body>
-		<h4>
-			Lista dodanych imion
-		</h4>
-		<table id="imienia">
-			<thead>
-				<tr>
-					<th>
-						Nr
-					</th>
-					<th>
-						Imie
-					</th>
-					<th>
-						Nazwisko
-					</th>
-					<th>
-						Autor
-					</th>
-					<th>
-						Akcja
-					</th>
-				</tr>
-			</thead>
-			<tbody>
+		<div id="container">
+			<!--topbar begin-->
+			<div id="topbar">
+				<div id="topbar-left">
+					<div class="topbar-item">
+						<a href="index.php">
+							Indeks
+						</a>
+					</div>
+					<div class="topbar-item">
+						<a href="names.php">
+							Imiona
+						</a>
+					</div>
 <?php
-	$i = 1;
-	while($row = mysqli_fetch_assoc($query_result)) {
-?>
-				<tr>
-					<td>
-<?php
-	echo $i;
-?>
-					</td>
-					<td>
-<?php
-	echo $row['name'];
-?>
-					</td>
-					<td>
-<?php
-	echo $row['surname'];
-?>
-					</td>
-					<td>
-<?php
-	$id = $row['name_author_id'];
-	if(isset(mysqli_fetch_assoc($db_connection -> query("SELECT `login` FROM `users` WHERE `id` = '$id'"))['login'])) {
-		echo mysqli_fetch_assoc($db_connection -> query("SELECT `login` FROM `users` WHERE `id` = '$id'"))['login'];
-	} else {
-		echo "<div style=\"color:red\">ERROR</div>";
+	if((isset($_SESSION['islogged'])) && ($_SESSION['islogged'])) {
+		echo "<div class=\"topbar-item\"><a href=\"addform.php\">Dodaj</a></div>";
 	}
 ?>
-					</td>
-					<td>
+				</div>
+				<div id="topbar-right">
+					<div class="topbar-item">
 <?php
-echo "
-	<form action=\"reportform.php\" name=\"f1\" method=\"POST\">
-		<input value=\"Zgłoś\" type=\"submit\" />
-		<input name=\"name\" type=\"hidden\" value=\"".$row['name']."\" />
-		<input name=\"surname\" type=\"hidden\" value=\"".$row['surname']."\" />
-	</form>";
+	if((isset($_SESSION['islogged'])) && ($_SESSION['islogged'])) {
+		echo "<a href=\"panel.php\">".$_SESSION['login']."</a>";
+	} else {
+		echo "<a href=\"loginform.php\">Zaloguj</a>";
+	}
 ?>
+					</div>
+					<div class="topbar-item">
 <?php
-	$i ++;
-}
+	if((isset($_SESSION['islogged'])) && ($_SESSION['islogged'])) {
+		echo "<a href=\"logout.php\">Wyloguj</a>";
+	} else {
+		echo "<a href=\"registerform.php\">Zarejestruj</a>";
+	}
 ?>
-				</tr>
-			</tbody>
-		</table>
+					</div>
+				</div>
+			</div>
+			<!--topbar end-->
+			<div id="content">
+				<div id="center">
+					<h4>
+						Lista dodanych imion
+					</h4>
+					<table id="imienia">
+						<thead>
+							<tr>
+								<th>
+									Nr
+								</th>
+								<th>
+									Imie
+								</th>
+								<th>
+									Nazwisko
+								</th>
+								<th>
+									Autor
+								</th>
+								<th>
+									Akcja
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+			<?php
+				$i = 1;
+				while($row = mysqli_fetch_assoc($query_result)) {
+			?>
+							<tr>
+								<td>
+			<?php
+				echo $i;
+			?>
+								</td>
+								<td>
+			<?php
+				echo $row['name'];
+			?>
+								</td>
+								<td>
+			<?php
+				echo $row['surname'];
+			?>
+								</td>
+								<td>
+			<?php
+				$id = $row['name_author_id'];
+				if(isset(mysqli_fetch_assoc($db_connection -> query("SELECT `login` FROM `users` WHERE `id` = '$id'"))['login'])) {
+					$login = mysqli_fetch_assoc($db_connection -> query("SELECT `login` FROM `users` WHERE `id` = '$id'"))['login'];
+					echo "<a href=\"profile.php?login=$login\">".$login."</a>";
+				} else {
+					echo "<div style=\"color:red\">ERROR</div>";
+				}
+			?>
+								</td>
+								<td>
+			<?php
+			echo "
+				<form action=\"reportform.php\" name=\"f1\" method=\"POST\">
+					<input class=\"url\" value=\"Zgłoś\" type=\"submit\" />
+					<input name=\"name\" type=\"hidden\" value=\"".$row['name']."\" />
+					<input name=\"surname\" type=\"hidden\" value=\"".$row['surname']."\" />
+				</form>";
+			?>
+			<?php
+				$i ++;
+			}
+			?>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
 	</body>
 </html>

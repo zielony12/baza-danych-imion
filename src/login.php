@@ -22,20 +22,11 @@
 
 	require_once "connect.php";
 
-	try {
-		$db_connection = new mysqli($db_host, $db_user, $db_password, $db_name);
-		$db_connection -> query("SET NAMES 'utf8'");
-		mysqli_set_charset($db_connection, "utf-8");
-		if($db_connection -> connect_errno != 0) {
-			throw new Exception(mysqli_connect_errno());
-		}
-	} catch(Exception $e) {
-		$error = "Nie można się połączyć z bazą danych. Przepraszamy.";
-	}
-  $query_result = mysqli_query($db_connection, "SELECT * FROM `users` WHERE `login` = '$login' AND `password` = '$password'");
-  $result = $query_result -> num_rows;
+	$db_connection = new PDO("mysql:dbhost=$db_host;dbname=$db_name;", $db_user. $db_password);
+	$db_connection -> query("SET NAMES 'utf8'");
 
-	if($result == 0) {
+	$res = $db_connection -> query("SELECT * FROM `$db_name`.`users` WHERE `login` = '$login' AND `password` = '$password'");
+	if($res -> fetchColumn() < 1) {
 		$error = "Login lub hasło są nie poprawne.";
 	}
 	if((!isset($password)) || (empty($password))) {
@@ -62,5 +53,4 @@
 			$_SESSION['error'] = "Wystąpił niezidentyfikowany błąd. Przepraszamy.";
 		}
 	}
-	$db_connection -> close();
 ?>
