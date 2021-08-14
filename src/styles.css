@@ -8,6 +8,8 @@
 
 body {
   background-color: white;
+  min-height: 100vh;
+  height: 100%;
 }
 
 table {
@@ -16,11 +18,55 @@ table {
   width: 100%;
 }
 
-h3 {
+h3,
+h4 {
   margin: 2px;
   margin-top: 4px;
   padding: 3px;
   padding-bottom: 3px;
+}
+
+#pfhead {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+
+#pfp {
+  margin: 5px;
+  width: 50px;
+  height: 50px;
+}
+
+.box {
+  float: left;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: flex-start;
+  font-size: 15px;
+  width: 200px;
+  height: 200px;
+  background-color: #eee;
+}
+
+abig {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  font-size: 70px;
+}
+
+amed {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  font-size: 25px;
 }
 
 .txt {
@@ -130,28 +176,30 @@ a:hover,
 }
 
 #container {
-  position: absolute;
   width: 100%;
+  min-height: 100vh;
+  height: 100%:
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 100%;
 }
 
 #content {
+  height: 100%;
   text-align: justify;
   display: flex;
   justify-content: center;
   padding: 10px;
   overflow: hidden;
   background-color: lightgray;
-  height: 100%;
+  min-height: 100vh;
   padding: 0px;
 }
 
 #content #center {
   background-color: white;
   width: 70%;
+  min-height: 100%;
   border: 1px solid lightgray;
   padding: 5px;
 }
@@ -159,6 +207,11 @@ a:hover,
 @media screen and (max-device-width: 480px) and (orientation: portrait) {
   * {
     font-size: 103%;
+  }
+  .box {
+    clear: both;
+    width: 100%;
+    margin-left: 0px;
   }
   table {
     font-size: 80%;

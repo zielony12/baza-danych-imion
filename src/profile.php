@@ -76,6 +76,7 @@
 			</div>
 			<!--topbar end-->
 			<div id="content">
+				<div id="center">
 <?php
 		if(isset($_SESSION['error'])) {
 			echo "<div id=\"session-info\">
@@ -85,11 +86,49 @@
 			unset($_SESSION['error']);
 		}
 ?>
-				<h4>
-					Profil użytkownika <?php echo $login; ?>
-				</h4>
-				<div>
-					Ilość dodanych imion: <?php echo mysqli_fetch_assoc($db_connection -> query("SELECT * FROM `users` WHERE `id` = '$id'"))['names_added']; ?>
+					<div id="pfhead">
+						<img id="pfp" src="img/pfp.jpg" />
+						<h1>
+<?php
+	echo $login;
+?>
+						</h1>
+					</div>
+					<div id="info">
+						<div class="box">
+							<h4>
+								Łącznie dodane imiona
+							</h4>
+							<abig>
+								<br />
+<?php
+	echo mysqli_fetch_assoc($db_connection -> query("SELECT `names_added` FROM `users` WHERE `login` = '$login'"))['names_added'];
+?>
+							</abig>
+						</div>
+						<div class="box">
+							<h4>
+								Dodane imiona
+							</h4>
+							<abig>
+								<br />
+<?php
+	echo $db_connection -> query("SELECT * FROM `names` WHERE `name_author_id` = '$id'") -> num_rows;
+?>
+							</abig>
+						</div>
+						<div class="box">
+							<h4>
+								Ostatnie imie
+							</h4>
+							<amed>
+								<br />
+<?php
+	echo mysqli_fetch_assoc($db_connection -> query("SELECT `name` FROM `names` WHERE `name_author_id` = '$id' ORDER BY `id` DESC"))['name'];
+?>
+							</amed>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

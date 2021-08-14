@@ -63,6 +63,7 @@
 			</div>
 			<!--topbar end-->
 			<div id="content">
+				<div id="center">
 <?php
 		if(isset($_SESSION['error'])) {
 			echo "<div id=\"session-info\">
@@ -72,60 +73,55 @@
 			unset($_SESSION['error']);
 		}
 ?>
-				<h4>
-					Zgłoś
-				</h4>
-				<form name="report" method="POST" action="add.php">
-					<input class="entry" name="e_name" type="text" placeholder="Imie"
-<?php
-	if(isset($_SESSION['name'])) {
-		echo 'value="'.$_SESSION['name'].'"';
-	}
-?>
-					/>
-					<br /><br />
-					<input class="entry" name="e_surname" type="text" placeholder="Nazwisko"
-<?php
-	if(isset($_SESSION['surname'])) {
-		echo 'value="'.$_SESSION['surname'].'"';
-	}
-?>
-					/>
-					<br /><br />
-					<label>
-						<input class="radio" name="reason" value="reason1" type="radio" />
-						To moje imie
-					</label>
-					<br /><br />
-					<label>
-						<input class="radio" name="reason" value="reason2" type="radio" />
-						Imie zawiera wulgaryzmy
-					</label>
-					<br /><br />
-					<label>
-						<input class="radio" name="reason" value="reason3" type="radio" checked="true" />
-						Imie w inny sposób niszczy zasady regulaminu
-					</label>
-					<br /><br />
-					<img border="2" src="verify.php" width="170" height="25" />
-					<br />
-					<input class="entry" name="e_code" type="text" placeholder="Kod z obrazka" />
-					<br /><br />
-					<label>
-						<input name="accept" type="checkbox" />
-						Akceptuję <a href="regulamin.php">regulamin</a>
-					</label>
-					<br /><br />
-					<input class="button" type="submit" value="ZGŁOŚ" />
-					<br /><br />
-					<input name="type" type="hidden" value="report" />
-				</form>
+					<h4>
+						Zgłoś
+					</h4>
+					<form name="report" method="POST" action="add.php">
+						<input class="entry" name="e_name" type="text" placeholder="Imie"
 	<?php
-		if(ISSET($_SESSION['error'])) {
-			echo "<p class='error'>".$_SESSION['error']."</p><br />";
-			unset($_SESSION['error']);
+		if(isset($_SESSION['name'])) {
+			echo 'value="'.$_SESSION['name'].'"';
 		}
 	?>
+						/>
+						<br /><br />
+						<input class="entry" name="e_surname" type="text" placeholder="Nazwisko"
+	<?php
+		if(isset($_SESSION['surname'])) {
+			echo 'value="'.$_SESSION['surname'].'"';
+		}
+	?>
+						/>
+						<br /><br />
+						<label>
+							<input class="radio" name="reason" value="reason1" type="radio" />
+							To moje imie
+						</label>
+						<br /><br />
+						<label>
+							<input class="radio" name="reason" value="reason2" type="radio" />
+							Imie zawiera wulgaryzmy
+						</label>
+						<br /><br />
+						<label>
+							<input class="radio" name="reason" value="reason3" type="radio" checked="true" />
+							Imie w inny sposób niszczy zasady regulaminu
+						</label>
+						<br /><br />
+						<img border="2" src="verify.php" width="170" height="25" />
+						<br />
+						<input class="entry" name="e_code" type="text" placeholder="Kod z obrazka" />
+						<br /><br />
+						<label>
+							<input name="accept" type="checkbox" />
+							Akceptuję <a href="regulamin.php">regulamin</a>
+						</label>
+						<br /><br />
+						<input class="button" type="submit" value="ZGŁOŚ" />
+						<br /><br />
+						<input name="type" type="hidden" value="report" />
+					</form>
+				</div>
 			</div>
 		</div>
 	</body>

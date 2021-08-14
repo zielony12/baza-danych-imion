@@ -70,86 +70,88 @@
 			</div>
 			<!--topbar end-->
 			<div id="content">
-				<h4>
-					Lista dodanych zgłoszeń
-				</h4>
-				<table id="zgloszenia">
-					<thead>
-						<tr>
-							<th>
-								Nr
-							</th>
-							<th>
-								Imie
-							</th>
-							<th>
-								Nazwisko
-							</th>
-							<th>
-								Autor im.
-							</th>
-							<th>
-								Autor zgł.
-							</th>
-							<th>
-								Powód
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-		<?php
-			$i = 1;
-			while($row = mysqli_fetch_assoc($query_result)) {
-		?>
-						<tr>
-							<td>
-		<?php
-			echo $i;
-		?>
-							</td>
-							<td>
-		<?php
-			echo $row['name'];
-		?>
-							</td>
-							<td>
-		<?php
-			echo $row['surname'];
-		?>
-							</td>
-							<td>
-		<?php
-			$name = $row['name'];
-			$surname = $row['surname'];
-			$name_author_id = mysqli_fetch_assoc($db_connection -> query("SELECT `name_author_id` FROM `names` WHERE `name` = '$name' AND `surname` = '$surname'"))['name_author_id'];
-			if(isset(mysqli_fetch_assoc($db_connection -> query("SELECT `login` FROM `users` WHERE `id` = '$name_author_id'"))['login'])) {
-				echo mysqli_fetch_assoc($db_connection -> query("SELECT `login` FROM `users` WHERE `id` = '$name_author_id'"))['login'];
-			} else {
-				echo "<div style=\"color:red\">ERROR</div>";
+				<div id="center">
+					<h4>
+						Lista dodanych zgłoszeń
+					</h4>
+					<table id="zgloszenia">
+						<thead>
+							<tr>
+								<th>
+									Nr
+								</th>
+								<th>
+									Imie
+								</th>
+								<th>
+									Nazwisko
+								</th>
+								<th>
+									Autor im.
+								</th>
+								<th>
+									Autor zgł.
+								</th>
+								<th>
+									Powód
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+			<?php
+				$i = 1;
+				while($row = mysqli_fetch_assoc($query_result)) {
+			?>
+							<tr>
+								<td>
+			<?php
+				echo $i;
+			?>
+								</td>
+								<td>
+			<?php
+				echo $row['name'];
+			?>
+								</td>
+								<td>
+			<?php
+				echo $row['surname'];
+			?>
+								</td>
+								<td>
+			<?php
+				$name = $row['name'];
+				$surname = $row['surname'];
+				$name_author_id = @mysqli_fetch_assoc($db_connection -> query("SELECT `name_author_id` FROM `names` WHERE `name` = '$name' AND `surname` = '$surname'"))['name_author_id'];
+				if(isset(mysqli_fetch_assoc($db_connection -> query("SELECT `login` FROM `users` WHERE `id` = '$name_author_id'"))['login'])) {
+					echo mysqli_fetch_assoc($db_connection -> query("SELECT `login` FROM `users` WHERE `id` = '$name_author_id'"))['login'];
+				} else {
+					echo "<div style=\"color:red\">ERROR</div>";
+				}
+			?>
+								</td>
+								<td>
+			<?php
+				$report_author_id = $row['name_author_id'];
+				if(isset(mysqli_fetch_assoc($db_connection -> query("SELECT `login` FROM `users` WHERE `id` = '$report_author_id'"))['login'])) {
+					echo mysqli_fetch_assoc($db_connection -> query("SELECT `login` FROM `users` WHERE `id` = '$report_author_id'"))['login'];
+				} else {
+					echo "<div style=\"color:red\">ERROR</div>";
+				}
+			?>
+								</td>
+								<td>
+			<?php
+				echo $row['reason'];
+			?>
+			<?php
+				$i ++;
 			}
-		?>
-							</td>
-							<td>
-		<?php
-			$report_author_id = $row['name_author_id'];
-			if(isset(mysqli_fetch_assoc($db_connection -> query("SELECT `login` FROM `users` WHERE `id` = '$report_author_id'"))['login'])) {
-				echo mysqli_fetch_assoc($db_connection -> query("SELECT `login` FROM `users` WHERE `id` = '$report_author_id'"))['login'];
-			} else {
-				echo "<div style=\"color:red\">ERROR</div>";
-			}
-		?>
-							</td>
-							<td>
-		<?php
-			echo $row['reason'];
-		?>
-		<?php
-			$i ++;
-		}
-		?>
-						</tr>
-					</tbody>
-				</table>
+			?>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 	</body>

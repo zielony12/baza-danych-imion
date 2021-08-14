@@ -71,6 +71,7 @@
 			<!--topbar end-->
 			<div id="content">
 				<div id="center">
+					Zgłoszenia znajdują się <a href="reports.php">tutaj</a>
 					<h4>
 						Lista dodanych imion
 					</h4>

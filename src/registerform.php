@@ -58,6 +58,7 @@
 			</div>
 			<!--topbar end-->
 			<div id="content">
+			<div id="center">
 <?php
 		if(isset($_SESSION['error'])) {
 			echo "<div id=\"session-info\">
@@ -67,31 +68,32 @@
 			unset($_SESSION['error']);
 		}
 ?>
-				<h4>
-					Zarejestruj
-				</h4>
-				<form name="register" method="POST" action="add.php">
-					<input class="entry" name="e_login" type="text" placeholder="Login" />
-					<br /><br />
-					<input class="entry" name="e_email" type="text" placeholder="E-mail" />
-					<br /><br />
-					<input class="entry" name="e_password" type="password" placeholder="Hasło" />
-					<br /><br />
-					<input class="entry" name="e_password2" type="password" placeholder="Powtórz hasło" />
-					<br /><br />
-					<img class="code" src="verify.php" />
-					<br />
-					<input class="entry" name="e_code" type="text" placeholder="Kod z obrazka" />
-					<br /><br />
-					<label>
-						<input name="accept" type="checkbox" />
-						Akceptuję <a href="regulamin.php">regulamin</a>
-					</label>
-					<br /><br />
-					<input class="button" type="submit" value="ZAREJESTRUJ" />
-					<br /><br />
-					<input name="type" type="hidden" value="register" />
-				</form>
+					<h4>
+						Zarejestruj
+					</h4>
+					<form name="register" method="POST" action="add.php">
+						<input class="entry" name="e_login" type="text" placeholder="Login" />
+						<br /><br />
+						<input class="entry" name="e_email" type="text" placeholder="E-mail" />
+						<br /><br />
+						<input class="entry" name="e_password" type="password" placeholder="Hasło" />
+						<br /><br />
+						<input class="entry" name="e_password2" type="password" placeholder="Powtórz hasło" />
+						<br /><br />
+						<img class="code" src="verify.php" />
+						<br />
+						<input class="entry" name="e_code" type="text" placeholder="Kod z obrazka" />
+						<br /><br />
+						<label>
+							<input name="accept" type="checkbox" />
+							Akceptuję <a href="regulamin.php">regulamin</a>
+						</label>
+						<br /><br />
+						<input class="button" type="submit" value="ZAREJESTRUJ" />
+						<br /><br />
+						<input name="type" type="hidden" value="register" />
+					</form>
+				</div>
 			</div>
 		</div>
 	</body>

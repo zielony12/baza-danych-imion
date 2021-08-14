@@ -95,16 +95,6 @@
 		$result = $query_result -> num_rows;
 	}
 
-	function split_mb($str) {
-  	$length = mb_strlen($str);
-    $chars = array();
-    for ($i=0; $i<$length; $i++) {
-    	$chars[] = mb_substr($str, $i, 1);
-    }
-    $chars[] = "";
-    return $chars;
-	}
-
 	if($type == "add") {
 		if((!isset($name_author_id)) || (empty($name_author_id))) {
 			$error = "Wystąpił problem z pobraniem wymaganych danych. Przepraszamy.";
@@ -130,16 +120,8 @@
 			$id = $row['id'];
 		}
 	} elseif($type == "register") {
-		$login_allowed_chars = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'W', 'X', 'Y', 'Z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0');
-		$name_as_arr = split_mb($name);
-		$valid_chars = 0;
-		foreach($name_allowed_chars as $name_allowed_char) {
-			if(in_array(mb_strtolower($name_allowed_char), $name_as_arr)) {
-				$valid_chars ++;
-			}
-		}
-		if($valid_chars != mb_strlen($name)) {
-			$error = "Twoje imię zawiera niedozwolone znaki.";
+		if(!ctype_alnum($login)) {
+			$error = "Twój login zawiera niedozwolone znaki.";
 		}
 		if((!isset($email)) || (empty($email)) || (!filter_var($email, FILTER_VALIDATE_EMAIL))) {
 			$error = "Musisz podać poprawny email.";
@@ -156,9 +138,6 @@
 		if((strlen($login) < 3) || (strlen($login) > 10)) {
 			$error = "Twój login nie może być mniejszy od 3 znaków oraz większy od 10.";
 		}
-		if(!ctype_alnum($login)) {
-			$error = "Twój login zawiera niedozwolone znaki.";
-		}
 	}
 
 	if(isset($error)) {
@@ -167,8 +146,8 @@
 
 	if($isOk) {
 		if($type == "add") {
-			$name = mb_strtoupper($name[0]) . mb_substr($name, 1, mb_strlen($name));
-			$surname = mb_strtoupper($surname[0]) . mb_substr($surname, 1, mb_strlen($surname));
+			$name = mb_strtoupper($name[0]).mb_substr($name, 1, mb_strlen($name));
+			$surname = mb_strtoupper($surname[0]).mb_substr($surname, 1, mb_strlen($surname));
 			if(($db_connection -> query("INSERT INTO `names` VALUES (NULL, '$name_author_id', '$name', '$surname')")) && ($db_connection -> query("UPDATE `users` SET `names_added` = `names_added` + 1 WHERE `id` = '$name_author_id'"))) {
 				$_SESSION['error'] = "Pomyślnie dodano $name $surname do bazy danych";
 				header('Location: addform.php');
