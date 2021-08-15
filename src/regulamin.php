@@ -68,15 +68,17 @@
 			</div>
 			<!--topbar end-->
 			<div id="content">
-				<h4>
-					Regulamin
-				</h4>
-				<div id="regulamin">
-		<?php
-			while($row = mysqli_fetch_assoc($query_result)) {
-				echo "> ".$row['content']."<br />";
-			}
-		?>
+				<div id="center">
+					<h4>
+						Regulamin
+					</h4>
+					<div id="regulamin">
+			<?php
+				while($row = mysqli_fetch_assoc($query_result)) {
+					echo "> ".$row['content']."<br />";
+				}
+			?>
+					</div>
 				</div>
 			</div>
 		</div>
