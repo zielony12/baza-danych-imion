@@ -22,11 +22,11 @@
 
 	require_once "connect.php";
 
-	$db_connection = new PDO("mysql:dbhost=$db_host;dbname=$db_name;", $db_user. $db_password);
+	$db_connection = new mysqli($db_host, $db_user, $db_password, $db_name);
 	$db_connection -> query("SET NAMES 'utf8'");
 
 	$res = $db_connection -> query("SELECT * FROM `$db_name`.`users` WHERE `login` = '$login' AND `password` = '$password'");
-	if($res -> fetchColumn() < 1) {
+	if($res -> num_rows < 1) {
 		$error = "Login lub hasło są nie poprawne.";
 	}
 	if((!isset($password)) || (empty($password))) {
